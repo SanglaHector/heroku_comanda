@@ -191,7 +191,7 @@ $app->get('/hello/{name}', function (Request $request, Response $response, $args
 /*$app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);*/
 $app->get('[/]', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("Hola mundo");
+    $response->getBody()->write("Hola mundo, estoy en slim");
     return $response;
 });
 $app->run();

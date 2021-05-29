@@ -79,7 +79,7 @@ class Validaciones {
     }
     static function validarNuevoUsuario($email)
     {
-        $tipos = TipoUsuario::all();
+        //$tipos = TipoUsuario::all();
         $usuarios = Usuario::where('email',$email)->get();
         foreach ($usuarios as $usuario ) {
             if($usuario->email == $email)

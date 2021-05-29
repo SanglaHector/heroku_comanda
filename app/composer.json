@@ -1,5 +1,5 @@
 {
-    "name": "sangl/comanda",
+    "name": "sangl/app",
     "authors": [
         {
             "name": "SanglaHector",
@@ -9,9 +9,9 @@
     "require": {
         "firebase/php-jwt": "^5.2",
         "slim/slim": "4.*",
-        "slim/psr7": "^1.2",
-        "illuminate/database": "^7.29",
-        "illuminate/events": "^7.29",
+        "slim/psr7": "^1.4",
+        "illuminate/database": "^7.30",
+        "illuminate/events": "^7.30",
         "myclabs/php-enum": "^1.7"
     },
     "autoload":{
@@ -21,7 +21,8 @@
             "Controllers\\":"src/Controllers",
             "Interfaces\\":"src/Interfaces",
             "Enums\\":"src/Enums",
-            "Components\\":"src/Components"
+            "Components\\":"src/Components",
+            "Middlewares\\":"src/Middlewares"
         }
     }
 }

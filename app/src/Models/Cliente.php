@@ -14,5 +14,5 @@ class Cliente extends Model
     //const CREATED_AT = 'creation_date';
     //const UPDATED_AT = 'last_update';
     use SoftDeletes;
-    //const DELETED_AT = 'deleted_at';
+    //const DELETED_AT = 'deleted_at'; 
 }

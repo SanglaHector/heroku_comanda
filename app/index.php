@@ -27,7 +27,7 @@ use Middlewares\MDWVerificarToken;
 
 $database = new Database();
 $app = AppFactory::create();
-$app->setBasePath('/herokucomanda/app');
+$app->setBasePath('/app');
 
 // Entrar/Salir/Registrarse
 $app->group('/Sing', function (RouteCollectorProxy $group) {
@@ -73,6 +73,8 @@ $app->group('/Pedido', function (RouteCollectorProxy $group) {
     $group->delete('/delete/{id}', PedidoController::class . ':delete');
     $group->post('/{id}', PedidoController::class . ':update');
 })->add(new MDWVerificarToken());
+
+
 //clientes
 $app->group('/Clientes', function (RouteCollectorProxy $group) {
     $group->post('[/]', ClienteController::class . ':addOne');
@@ -103,7 +105,6 @@ $app->group('/Ticket', function (RouteCollectorProxy $group) {
     $group->post('[/]', TicketController::class . ':addOne');
     $group->get('s[/{id}]', TicketController::class . ':getAll');
 });
-//pruebas
 
 $app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);

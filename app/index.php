@@ -29,6 +29,11 @@ $database = new Database();
 $app = AppFactory::create();
 //$app->setBasePath('/herokucomanda/app');//localhost
 $app->setBasePath('/app');//heroku
+//prueba
+$app->get('[/]', function (Request $request, Response $response, $args) {
+    $response->getBody()->write("Hola mundo, estoy en slim");
+    return $response;
+});
 
 // Entrar/Salir/Registrarse
 $app->group('/Sing', function (RouteCollectorProxy $group) {

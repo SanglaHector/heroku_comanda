@@ -28,7 +28,7 @@ use Middlewares\MDWVerificarToken;
 $database = new Database();
 $app = AppFactory::create();
 //$app->setBasePath('/herokucomanda/app');//localhost
-$app->setBasePath('/app');//heroku
+$app->setBasePath('/app/app');//heroku
 //prueba
 $app->get('[/]', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Hola mundo, estoy en heroku");

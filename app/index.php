@@ -2,14 +2,14 @@
 //require __DIR__ . '../vendor/autoload.php';//heroku
 require __DIR__ . './vendor/autoload.php';//LOCALHOST
 echo 'hola mundo';
+/*
+
+//Configuracion base de datos
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 echo ' agregué dependencias';
-/*
-
-//Configuracion base de datos
 use Config\Database;
 //Controladores 
 use Controllers\ClienteController;

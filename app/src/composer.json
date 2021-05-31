@@ -1,0 +1,28 @@
+{
+    "name": "sangl/app",
+    "authors": [
+        {
+            "name": "SanglaHector",
+            "email": "sanglahector@gmail.com"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^5.2",
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.4",
+        "illuminate/database": "^7.30",
+        "illuminate/events": "^7.30",
+        "myclabs/php-enum": "^1.7"
+    },
+    "autoload":{
+        "psr-4":{
+            "Config\\":"src/Config",
+            "Models\\":"src/Models",
+            "Controllers\\":"src/Controllers",
+            "Interfaces\\":"src/Interfaces",
+            "Enums\\":"src/Enums",
+            "Components\\":"src/Components",
+            "Middlewares\\":"src/Middlewares"
+        }
+    }
+}

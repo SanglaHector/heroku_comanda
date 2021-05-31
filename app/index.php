@@ -1,4 +1,6 @@
 <?php
+echo 'hola mundo';
+/*
 //require __DIR__ . './vendor/autoload.php';//LOCALHOST
 require __DIR__ . '../vendor/autoload.php';//heroku
 
@@ -115,4 +117,5 @@ $app->group('/Ticket', function (RouteCollectorProxy $group) {
 
 $app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
-$app->run();
+$app->run();*/
+

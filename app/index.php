@@ -1,8 +1,8 @@
 <?php
+require __DIR__ . '../vendor/autoload.php';//heroku
 echo 'hola mundo';
 /*
 //require __DIR__ . './vendor/autoload.php';//LOCALHOST
-require __DIR__ . '../vendor/autoload.php';//heroku
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

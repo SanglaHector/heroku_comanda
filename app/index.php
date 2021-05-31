@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';//heroku
-//require __DIR__ . './vendor/autoload.php';//LOCALHOST
+require __DIR__ . './vendor/autoload.php';//LOCALHOST
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;

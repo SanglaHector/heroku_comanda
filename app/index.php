@@ -1,5 +1,6 @@
 <?php
-require __DIR__ . './vendor/autoload.php';
+//require __DIR__ . './vendor/autoload.php';//LOCALHOST
+require __DIR__ . '../vendor/autoload.php';//heroku
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -24,11 +25,11 @@ use Enums\EtipoUsuario;
 //Middlewares
 use Middlewares\MDRVerificarRol;
 use Middlewares\MDWVerificarToken;
-
+echo 'hola';
 $database = new Database();
 $app = AppFactory::create();
 //$app->setBasePath('/herokucomanda/app');//localhost
-$app->setBasePath('/app/app');//heroku
+$app->setBasePath('/app');//heroku
 //prueba
 $app->get('[/]', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Hola mundo, estoy en heroku");

@@ -10,6 +10,17 @@
         "guzzlehttp/psr7": "^1.8",
         "http-interop/http-factory-guzzle": "^1.0",
         "laminas/laminas-diactoros": "^2.5"
+     },
+     "autoload":{
+         "psr-4":{
+             "Config\\":"app/src/Config",
+             "Models\\":"app/src/Models",
+             "Controllers\\":"app/src/Controllers",
+             "Interfaces\\":"app/src/Interfaces",
+             "Enums\\":"app/src/Enums",
+             "Components\\":"app/src/Components",
+             "Middlewares\\":"app/src/Middlewares"
+         }
      }
  }
 

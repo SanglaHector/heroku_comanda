@@ -13,13 +13,13 @@
      },
      "autoload":{
          "psr-4":{
-             "Config\\":"herokucomanda/app/src/Config",
-             "Models\\":"herokucomanda/app/src/Models",
-             "Controllers\\":"herokucomanda/app/src/Controllers",
-             "Interfaces\\":"herokucomanda/app/src/Interfaces",
-             "Enums\\":"herokucomanda/app/src/Enums",
-             "Components\\":"herokucomanda/app/src/Components",
-             "Middlewares\\":"herokucomanda/app/src/Middlewares"
+             "Config\\":"./app/src/Config",
+             "Models\\":"./app/src/Models",
+             "Controllers\\":"./app/src/Controllers",
+             "Interfaces\\":"./app/src/Interfaces",
+             "Enums\\":"./app/src/Enums",
+             "Components\\":"./app/src/Components",
+             "Middlewares\\":"./app/src/Middlewares"
          }
      }
  }

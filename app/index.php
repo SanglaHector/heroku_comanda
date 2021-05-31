@@ -6,10 +6,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
-/*
 
 //Configuracion base de datos
-echo ' agregué dependencias';
 use Config\Database;
 //Controladores 
 use Controllers\ClienteController;
@@ -28,8 +26,7 @@ use Enums\EtipoUsuario;
 //Middlewares
 use Middlewares\MDRVerificarRol;
 use Middlewares\MDWVerificarToken;
-echo 'hola';
-$database = new Database();
+/*$database = new Database();
 $app = AppFactory::create();
 //$app->setBasePath('/herokucomanda/app');//localhost
 $app->setBasePath('/app');//heroku

@@ -1,7 +1,6 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';//heroku
-//require __DIR__ . './vendor/autoload.php';//LOCALHOST
-echo 'hola mundo';
+require __DIR__ . './vendor/autoload.php';//LOCALHOST
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -26,7 +25,9 @@ use Enums\EtipoUsuario;
 //Middlewares
 use Middlewares\MDRVerificarRol;
 use Middlewares\MDWVerificarToken;
-/*$database = new Database();
+$database = new Database();
+echo 'hola mundo';
+/*
 $app = AppFactory::create();
 //$app->setBasePath('/herokucomanda/app');//localhost
 $app->setBasePath('/app');//heroku

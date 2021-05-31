@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . './vendor/autoload.php';
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -34,7 +34,7 @@ $app->get('[/]', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Hola mundo, estoy en heroku");
     return $response;
 });
-/*
+
 // Entrar/Salir/Registrarse
 $app->group('/Sing', function (RouteCollectorProxy $group) {
     $group->post('In/empleados', UsuarioController::class . ':singIn');//listo
@@ -111,7 +111,7 @@ $app->group('/Ticket', function (RouteCollectorProxy $group) {
     $group->post('[/]', TicketController::class . ':addOne');
     $group->get('s[/{id}]', TicketController::class . ':getAll');
 });
-*/
+
 $app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 $app->run();

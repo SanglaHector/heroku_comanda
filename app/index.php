@@ -28,7 +28,7 @@ $database = new Database();
 $app = AppFactory::create();
 //$app->setBasePath('/herokucomanda/app');//localhost
 var_dump(__DIR__);
-$app->setBasePath('/app');//heroku
+$app->setBasePath('/app/app');//heroku
 // Entrar/Salir/Registrarse
 /*$app->group('/Sing', function (RouteCollectorProxy $group) {
     $group->post('In/empleados', UsuarioController::class . ':singIn');//listo

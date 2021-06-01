@@ -27,9 +27,10 @@ use Middlewares\MDWVerificarToken;
 $database = new Database();
 $app = AppFactory::create();
 //$app->setBasePath('/herokucomanda/app');//localhost
+var_dump(dirname(1));
 $app->setBasePath('/comanda-sangla-hector/app');//heroku
 // Entrar/Salir/Registrarse
-$app->group('/Sing', function (RouteCollectorProxy $group) {
+/*$app->group('/Sing', function (RouteCollectorProxy $group) {
     $group->post('In/empleados', UsuarioController::class . ':singIn');//listo
     $group->post('In/clientes', ClienteController::class . ':singIn');
     
@@ -102,7 +103,7 @@ $app->group('/Sector', function (RouteCollectorProxy $group) {
 $app->group('/Ticket', function (RouteCollectorProxy $group) {
     $group->post('[/]', TicketController::class . ':addOne');
     $group->get('s[/{id}]', TicketController::class . ':getAll');
-});
+});*/
 $app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 $app->run();

@@ -2,9 +2,7 @@
 
 namespace Enums;
 
-use MyCLabs\Enum\Enum;
-
-class Eestado extends Enum
+class Eestado 
 {
     const PENDIENTE = 1;
     const EN_PREPARACION = 2;

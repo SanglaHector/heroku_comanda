@@ -1,9 +1,7 @@
 <?php
 namespace Enums;
 
-use MyCLabs\Enum\Enum;
-
-class EtipoUsuario extends Enum
+class EtipoUsuario 
 {
     const BARTENDER = 1;
     const CERVECERO = 2;

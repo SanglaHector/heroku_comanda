@@ -26,25 +26,18 @@ use Enums\EtipoUsuario;
 use Middlewares\MDRVerificarRol;
 use Middlewares\MDWVerificarToken;
 $database = new Database();
-echo 'hola mundo';
-/*
 $app = AppFactory::create();
 //$app->setBasePath('/herokucomanda/app');//localhost
 $app->setBasePath('/app');//heroku
-//prueba
-$app->get('[/]', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("Hola mundo, estoy en heroku");
-    return $response;
-});
-
 // Entrar/Salir/Registrarse
+
 $app->group('/Sing', function (RouteCollectorProxy $group) {
     $group->post('In/empleados', UsuarioController::class . ':singIn');//listo
     $group->post('In/clientes', ClienteController::class . ':singIn');
-
+    
     $group->post('Up/empleados', UsuarioController::class . ':singUp');
     $group->post('Up/clientes', ClienteController::class . ':singUp');
-
+    
     $group->post('Out/empleados', UsuarioController::class . ':singOut');//sin uso
     $group->post('Out/clientes', ClienteController::class . ':singOut');//sin uso
 });
@@ -113,8 +106,7 @@ $app->group('/Ticket', function (RouteCollectorProxy $group) {
     $group->post('[/]', TicketController::class . ':addOne');
     $group->get('s[/{id}]', TicketController::class . ':getAll');
 });
-
 $app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
-$app->run();*/
+$app->run();
 

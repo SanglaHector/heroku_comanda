@@ -29,9 +29,9 @@ $app = AppFactory::create();
 //$app->setBasePath('/herokucomanda/app');//localhost
 //$app->setBasePath('/app/app');//heroku
 
-
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
+
 $app->get('[/]', function (Request $request, Response $response) {    
     $response->getBody()->write("Slim Framework 4 PHP");
     return $response;

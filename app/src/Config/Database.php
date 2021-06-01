@@ -7,12 +7,22 @@ class Database{
 	public function __construct(){
     $capsule = new Capsule;
 
-    $capsule->addConnection([
+    /*$capsule->addConnection([
         'driver'    => 'mysql',
         'host'      => 'localhost',
         'database'  => 'la_comanda',
         'username'  => 'root',
         'password'  => '',
+        'charset'   => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix'    => '',
+    ]);*/
+    $capsule->addConnection([
+        'driver'    => 'mysql',
+        'host'      => 'remotemysql.com',
+        'database'  => 'FZkEgabvZf',
+        'username'  => 'FZkEgabvZf',
+        'password'  => 'uZn58AnHLF',
         'charset'   => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix'    => '',

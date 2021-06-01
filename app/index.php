@@ -1,6 +1,5 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';//heroku
-//require __DIR__ . './vendor/autoload.php';//LOCALHOST
+require __DIR__ . '/../vendor/autoload.php';
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
@@ -28,9 +27,8 @@ use Middlewares\MDWVerificarToken;
 $database = new Database();
 $app = AppFactory::create();
 //$app->setBasePath('/herokucomanda/app');//localhost
-$app->setBasePath('/app');//heroku
+$app->setBasePath('/heroku_comanda/app');//heroku
 // Entrar/Salir/Registrarse
-
 $app->group('/Sing', function (RouteCollectorProxy $group) {
     $group->post('In/empleados', UsuarioController::class . ':singIn');//listo
     $group->post('In/clientes', ClienteController::class . ':singIn');
@@ -49,8 +47,8 @@ $app->group('/Usuario', function (RouteCollectorProxy $group) {
     $group->delete('/delete/{id}', UsuarioController::class . ':delete');
     $group->post('/{id}', UsuarioController::class . ':update');
 
-})  ->add(new MDRVerificarRol([EtipoUsuario::SOCIO]))
-    ->add(new MDWVerificarToken());
+})->add(new MDRVerificarRol([EtipoUsuario::SOCIO]))
+->add(new MDWVerificarToken());
 
 //producto
 $app->group('/Producto', function (RouteCollectorProxy $group) {
@@ -74,7 +72,6 @@ $app->group('/Pedido', function (RouteCollectorProxy $group) {
     $group->delete('/delete/{id}', PedidoController::class . ':delete');
     $group->post('/{id}', PedidoController::class . ':update');
 })->add(new MDWVerificarToken());
-
 
 //clientes
 $app->group('/Clientes', function (RouteCollectorProxy $group) {

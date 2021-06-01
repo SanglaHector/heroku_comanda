@@ -55,8 +55,8 @@ $app->group('/Usuario', function (RouteCollectorProxy $group) {
     $group->delete('/delete/{id}', UsuarioController::class . ':delete');
     $group->post('/{id}', UsuarioController::class . ':update');
 
-})->add(new MDRVerificarRol([EtipoUsuario::SOCIO]))
-->add(new MDWVerificarToken());
+});//->add(new MDRVerificarRol([EtipoUsuario::SOCIO]))
+//->add(new MDWVerificarToken());
 
 //producto
 $app->group('/Producto', function (RouteCollectorProxy $group) {

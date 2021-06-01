@@ -55,8 +55,8 @@ $app->group('/Empleado', function (RouteCollectorProxy $group) {
     $group->delete('/delete/{id}', UsuarioController::class . ':delete');
     $group->post('/{id}', UsuarioController::class . ':update');
 
-})->add(new MDRVerificarRol([EtipoUsuario::SOCIO]))
-->add(new MDWVerificarToken());
+});//->add(new MDRVerificarRol([EtipoUsuario::SOCIO]))
+//->add(new MDWVerificarToken());
 
 //producto
 $app->group('/Producto', function (RouteCollectorProxy $group) {
@@ -64,7 +64,7 @@ $app->group('/Producto', function (RouteCollectorProxy $group) {
     $group->post('[/]', ProductoController::class . ':addOne');
     $group->delete('/delete/{id}', ProductoController::class . ':delete');
     $group->post('/{id}', ProductoController::class . ':update');
-})->add(new MDWVerificarToken());
+});//->add(new MDWVerificarToken());
 
 //mesa
 $app->group('/Mesa', function (RouteCollectorProxy $group) {
@@ -72,7 +72,7 @@ $app->group('/Mesa', function (RouteCollectorProxy $group) {
     $group->post('[/]', MesaController::class . ':addOne');
     $group->delete('/delete/{id}', MesaController::class . ':delete');
     $group->post('/{id}', MesaController::class . ':update');
-})->add(new MDWVerificarToken());
+});//->add(new MDWVerificarToken());
 //pedido
 $app->group('/Pedido', function (RouteCollectorProxy $group) {
     $group->get('s[/{clave}[/{valor}]]', PedidoController::class . ':getAll');

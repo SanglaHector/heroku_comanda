@@ -28,7 +28,7 @@ $database = new Database();
 $app = AppFactory::create();
 var_dump(__DIR__);
 //$app->setBasePath('/herokucomanda/app');//localhost
-$app->setBasePath('/app/app');//heroku
+$app->setBasePath('/app/app/');//heroku
 $app->get('[/]', function (Request $request, Response $response) {    
     $response->getBody()->write("Slim Framework 4 PHP");
     return $response;

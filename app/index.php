@@ -27,7 +27,7 @@ use Middlewares\MDWVerificarToken;
 $database = new Database();
 $app = AppFactory::create();
 //$app->setBasePath('/herokucomanda/app');//localhost
-$app->setBasePath('/heroku_comanda/app');//heroku
+$app->setBasePath('/app/app');//heroku
 // Entrar/Salir/Registrarse
 $app->group('/Sing', function (RouteCollectorProxy $group) {
     $group->post('In/empleados', UsuarioController::class . ':singIn');//listo

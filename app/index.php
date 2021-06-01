@@ -28,8 +28,9 @@ $database = new Database();
 $app = AppFactory::create();
 var_dump(__DIR__);
 //$app->setBasePath('/herokucomanda/app');//localhost
-$app->setBasePath('/app/app');//heroku
+//$app->setBasePath('/app/app');//heroku
 $app->addBodyParsingMiddleware();
+$app->addRoutingMiddleware();
 $app->get('[/]', function (Request $request, Response $response) {    
     $response->getBody()->write("Slim Framework 4 PHP");
     return $response;
@@ -109,7 +110,6 @@ $app->group('/Ticket', function (RouteCollectorProxy $group) {
     $group->post('[/]', TicketController::class . ':addOne');
     $group->get('s[/{id}]', TicketController::class . ':getAll');
 });
-$app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 $app->run();
 

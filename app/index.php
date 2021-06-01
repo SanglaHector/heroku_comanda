@@ -26,9 +26,13 @@ use Middlewares\MDRVerificarRol;
 use Middlewares\MDWVerificarToken;
 $database = new Database();
 $app = AppFactory::create();
-//$app->setBasePath('/herokucomanda/app');//localhost
 var_dump(__DIR__);
+//$app->setBasePath('/herokucomanda/app');//localhost
 $app->setBasePath('/app/app');//heroku
+$app->get('[/]', function (Request $request, Response $response) {    
+    $response->getBody()->write("Slim Framework 4 PHP");
+    return $response;
+});
 // Entrar/Salir/Registrarse
 /*$app->group('/Sing', function (RouteCollectorProxy $group) {
     $group->post('In/empleados', UsuarioController::class . ':singIn');//listo

@@ -26,9 +26,10 @@ use Middlewares\MDRVerificarRol;
 use Middlewares\MDWVerificarToken;
 $database = new Database();
 $app = AppFactory::create();
-var_dump(__DIR__);
 //$app->setBasePath('/herokucomanda/app');//localhost
 //$app->setBasePath('/app/app');//heroku
+
+
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 $app->get('[/]', function (Request $request, Response $response) {    

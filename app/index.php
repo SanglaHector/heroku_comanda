@@ -89,7 +89,7 @@ $app->group('/Mesa', function (RouteCollectorProxy $group) {
     ->add(new MDWVerificarRol([EtipoUsuario::CLIENTE]));
     $group->post('/Cerrar/{id}', MesaController::class . ':cerrar')
     ->add(new MDWVerificarRol([EtipoUsuario::MOZO,EtipoUsuario::SOCIO]));
-
+ 
     $group->get('/abrirTodas',MesaController::class . ':openAll')
     ->add(new MDWVerificarRol([EtipoUsuario::SOCIO]));
 })->add(new MDWVerificarToken());

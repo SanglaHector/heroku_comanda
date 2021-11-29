@@ -5,6 +5,7 @@ use Interfaces\IDatabase;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Models\Sector;
+use Components\Retorno;
 
 class SectorController implements IDatabase
 {
@@ -16,10 +17,12 @@ class SectorController implements IDatabase
             {
                 $model = new Sector();
                 $respuesta = $model::insert($body['nombre'],$body['id_tipo_empleado']);
+                $respuesta = new Retorno(true,$respuesta,null);
                 $response->getBody()->write(json_encode($respuesta));
             }else
             {
                 $respuesta = "Faltan cargar datos";
+                $respuesta = new Retorno(false,$respuesta,null);
                 $response->getBody()->write(json_encode($respuesta));
             }
             return $response;
@@ -30,9 +33,11 @@ class SectorController implements IDatabase
         {
             $model = new Sector();
             $respuesta = $model::deleteById($args['id']);
+            $respuesta = new Retorno(true,$respuesta,null);
             $response->getBody()->write(json_encode($respuesta));
         }else{
             $respuesta = "Faltan cargar datos";
+            $respuesta = new Retorno(false,$respuesta,null);
             $response->getBody()->write(json_encode($respuesta));
         }
         return $response;
@@ -41,6 +46,7 @@ class SectorController implements IDatabase
     {
         $model = new Sector();
         $respuesta = $model::get();
+        $respuesta = new Retorno(true,$respuesta,null);
         $response->getBody()->write(json_encode($respuesta));
         return $response;
     }
@@ -68,10 +74,12 @@ class SectorController implements IDatabase
             {
                 $model = new Sector();
                 $respuesta = $model::updateById($body['nombre'],$body['id_tipo_empleado'],$args['id']);
+                $respuesta = new Retorno(true,$respuesta,null);
                 $response->getBody()->write(json_encode($respuesta));
             }else
             {
                 $respuesta = "Faltan cargar datos";
+                $respuesta = new Retorno(false,$respuesta,null);
                 $response->getBody()->write(json_encode($respuesta));
             }
             return $response;
@@ -81,6 +89,7 @@ class SectorController implements IDatabase
         $body = $args['id'];
         $model = new Sector();
         $respuesta = $model::deleteById($body);
+        $respuesta = new Retorno(true,$respuesta,null);
         $response->getBody()->write(json_encode($respuesta));
         return $response;
     }

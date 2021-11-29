@@ -7,18 +7,12 @@ class Estado extends Model
 {
     protected $table = 'estados';
     protected $primaryKey = 'id';
-    //public $incrementing = false;
-    //protected $keyType = 'string';
-    //public $timestamps = false;
-    //protected $dateFormat = 'U';
-    //const CREATED_AT = 'creation_date';
-    //const UPDATED_AT = 'last_update';
     use SoftDeletes;
-    //const DELETED_AT = 'deleted_at';
-    static function insert($estado)
+    static function insert($estado,$entidad)
     {
         $model = new Estado();
         $model->estado = $estado;
+        $model->id_entidad = $entidad;
         $retorno = $model->save();
         return $retorno;
     }
@@ -51,13 +45,14 @@ class Estado extends Model
         $model->delete();
         return $model;
     }
-    static function updateById($estado,$id)
+    static function updateById($estado,$entidad,$id)
     {
         $model = new Estado();
         $model = $model->find($id);
         if(!is_null($model))
         {
             $model->estado = $estado;
+            $model->id_entidad = $entidad;
             $model->save();
         }else
         {

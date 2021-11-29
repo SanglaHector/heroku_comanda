@@ -5,6 +5,7 @@ use Interfaces\IDatabase;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Models\Producto;
+use Components\Retorno;
 
 class ProductoController implements IDatabase
 {
@@ -20,6 +21,7 @@ class ProductoController implements IDatabase
                 $producto = new Producto();
                 $respuesta = $producto::insert($body['id_sector'],$body['nombre'],
                 $body['stock'],$body['precio'],$body['tiempo_preparacion']);
+                $respuesta = new Retorno(true,$respuesta,null);
                 $response->getBody()->write(json_encode($respuesta));
             }else
             {
@@ -52,6 +54,7 @@ class ProductoController implements IDatabase
         $tipo = 2;//'empleado'
         $producto = new Producto();
         $respuesta = $producto::get();
+        $respuesta = new Retorno(true,$respuesta,null);
         $response->getBody()->write(json_encode($respuesta));
         return $response;
     }
@@ -68,10 +71,12 @@ class ProductoController implements IDatabase
                 $producto = new Producto();
                 $respuesta = $producto::updateById($body['id_sector'],$body['nombre'],
                 $body['stock'],$body['precio'],$body['tiempo_preparacion'],$args['id']);
+                $respuesta = new Retorno(true,$respuesta,null);
                 $response->getBody()->write(json_encode($respuesta));
             }else
             {
                 $respuesta = "Faltan cargar datos";
+                $respuesta = new Retorno(false,$respuesta,null);
                 $response->getBody()->write(json_encode($respuesta));
             }
             return $response;
@@ -81,6 +86,7 @@ class ProductoController implements IDatabase
         $body = $args['id'];
         $producto = new Producto();
         $respuesta = $producto::deleteById($body);
+        $respuesta = new Retorno(true,$respuesta,null);
         $response->getBody()->write(json_encode($respuesta));
         return $response;
     }

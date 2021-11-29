@@ -35,7 +35,7 @@ Ahora vamos a la sección **Deploy** y hacemos clic en la opción de GitHub, la 
 
 Seleccionamos el repo y hacemos clic en **Connect**
 
-Una vez hecho esto, elegimos la rama de github que queremos deplegar con nuestra aplicación Heroku, en nuestro caso `main`, y hacemos clic en **Enable Automatic Deploys**. De esta forma, cada vez que se haga una modificación a esta rama, Heroku va actualizar automáticamente la aplicación.
+Una vez hvar_dump esto, elegimos la rama de github que queremos deplegar con nuestra aplicación Heroku, en nuestro caso `main`, y hacemos clic en **Enable Automatic Deploys**. De esta forma, cada vez que se haga una modificación a esta rama, Heroku va actualizar automáticamente la aplicación.
 
 ![Heroku4](https://i.ibb.co/d0z1NWv/heroku4.png)
 

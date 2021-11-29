@@ -7,7 +7,7 @@ class Database{
 	public function __construct(){
     $capsule = new Capsule;
 
-    /*$capsule->addConnection([
+    $capsule->addConnection([
         'driver'    => 'mysql',
         'host'      => 'localhost',
         'database'  => 'la_comanda',
@@ -16,7 +16,8 @@ class Database{
         'charset'   => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix'    => '',
-    ]);*/
+    ]);
+    /*
     $capsule->addConnection([
         'driver'    => 'mysql',
         'host'      => 'remotemysql.com',
@@ -26,7 +27,7 @@ class Database{
         'charset'   => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix'    => '',
-    ]);
+    ]);*/
     $capsule->setEventDispatcher(new Dispatcher(new Container));
     $capsule->setAsGlobal();
     $capsule->bootEloquent();

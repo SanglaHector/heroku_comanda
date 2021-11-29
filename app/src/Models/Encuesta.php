@@ -15,16 +15,18 @@ class Encuesta extends Model
     //const UPDATED_AT = 'last_update';
     use SoftDeletes;
     //const DELETED_AT = 'deleted_at';
-    static function insert($id_cliente,$mesa,$restaurante,$mozo,$cocinero,$id_ticket,$descripcion)
+    static function insert($id_cliente,$id_mesa,$id_mozo,$id_ticket,$numero_mesa,$mozo,$comida,$restaurante,$desc)
     {
         $model = new Encuesta();
         $model->id_cliente = $id_cliente;
-        $model->mesa = $mesa;
-        $model->restaurante =$restaurante;
-        $model->mozo = $mozo;
-        $model->cocinero = $cocinero;
+        $model->id_mesa = $id_mesa;
+        $model->id_mozo = $id_mozo;
         $model->id_ticket = $id_ticket;
-        $model->descripcion = $descripcion;
+        $model->numero_mesa = $numero_mesa;
+        $model->mozo = $mozo;
+        $model->comida = $comida;
+        $model->restaurante = $restaurante;
+        $model->descripcion = $desc;
         $retorno = $model->save();
         return $retorno;
     }
@@ -57,20 +59,22 @@ class Encuesta extends Model
         $model->delete();
         return $model;
     }
-    static function updateById($id_cliente,$mesa,$restaurante,$mozo,$cocinero,$id_ticket,$descripcion,$id)
+    static function updateById($id_cliente,$id_mesa,$id_mozo,$id_ticket,$numero_mesa,$mozo,$comida,$restaurante,$desc,$id)
     {
         $model = new Encuesta();
         $model = $model->find($id);
         if(!is_null($model))
         {
             $model->id_cliente = $id_cliente;
-            $model->mesa = $mesa;
-            $model->restaurante =$restaurante;
-            $model->mozo = $mozo;
-            $model->cocinero = $cocinero;
+            $model->id_mesa = $id_mesa;
+            $model->id_mozo = $id_mozo;
             $model->id_ticket = $id_ticket;
-            $model->descripcion = $descripcion;
-            $model->save();
+            $model->numero_mesa = $numero_mesa;
+            $model->mozo = $mozo;
+            $model->comida = $comida;
+            $model->retaurante = $restaurante;
+            $model->descripcion = $desc;
+            $retorno = $model->save();
         }else
         {
             return 'Encuesta inexistente';

@@ -5,6 +5,7 @@ use Interfaces\IDatabase;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Models\Log;
+use Components\Retorno;
 
 class LogController implements IDatabase
 {
@@ -12,16 +13,18 @@ class LogController implements IDatabase
     {
         $body = $request->getParsedBody();
         if( isset($body['id_usuario']) &&
-            isset($body['in_out']) )
+            isset($body['id_sector']) &&
+            isset($body['in_out']))
             {
                 $model = new Log();
-                $respuesta = $model::insert($body['id_usuario'],$body['in_out']);
-                $response->getBody()->write(json_encode($respuesta));
+                $respuesta = $model::insert($body['id_usuario'],$body['id_sector'],$body['in_out']);
+                $respuesta = new Retorno(true,$respuesta,null);
             }else
             {
                 $respuesta = "Faltan cargar datos";
-                $response->getBody()->write(json_encode($respuesta));
+                $respuesta = new Retorno(false,$respuesta,null);
             }
+            $response->getBody()->write(json_encode($respuesta));
             return $response;
     }
     function getOne(Request $request, Response $response, $args)
@@ -30,17 +33,19 @@ class LogController implements IDatabase
         {
             $model = new Log();
             $respuesta = $model::deleteById($args['id']);
-            $response->getBody()->write(json_encode($respuesta));
+            $respuesta = new Retorno(true,$respuesta,null);
         }else{
             $respuesta = "Faltan cargar datos";
-            $response->getBody()->write(json_encode($respuesta));
+            $respuesta = new Retorno(false,$respuesta,null);
         }
+        $response->getBody()->write(json_encode($respuesta));
         return $response;
     }
     function getAll(Request $request, Response $response, $args)
     {
         $model = new Log();
         $respuesta = $model::get();
+        $respuesta = new Retorno(true,$respuesta,null);
         $response->getBody()->write(json_encode($respuesta));
         return $response;
     }
@@ -63,17 +68,19 @@ class LogController implements IDatabase
     {
         $body = $request->getParsedBody();
         if( isset($body['id_usuario']) &&
-           isset($body['in_out']) &&
-           isset($args['id']))
+            isset($body['id_sector']) &&
+            isset($body['in_out']) &&
+            isset($args['id']))
             {
                 $model = new Log();
-                $respuesta = $model::updateById($body['id_usuario'],$body['in_out'],$args['id']);
-                $response->getBody()->write(json_encode($respuesta));
+                $respuesta = $model::updateById($body['id_usuario'],$body['id_sector'],$body['in_out'],$args['id']);
+                $respuesta = new Retorno(true,$respuesta,null);
             }else
             {
                 $respuesta = "Faltan cargar datos";
-                $response->getBody()->write(json_encode($respuesta));
+                $respuesta = new Retorno(false,$respuesta,null);
             }
+            $response->getBody()->write(json_encode($respuesta));
             return $response;
     }
     function delete(Request $request, Response $response, $args)
@@ -81,7 +88,8 @@ class LogController implements IDatabase
         $body = $args['id'];
         $model = new Log();
         $respuesta = $model::deleteById($body);
-        $response->getBody()->write(json_encode($respuesta));
+        $respuesta = new Retorno(true,$respuesta,null);
+        
         return $response;
     }
 }

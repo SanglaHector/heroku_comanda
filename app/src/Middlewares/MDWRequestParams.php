@@ -5,8 +5,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Psr7\Response as ResponseMW;
 
-use Models\Usuario;
-
+use Components\Retorno;
 use Enums\Emodels;
 
 class MDWRequestParams// Aca se valida que exista todo lo que ingresa por request y que sea valido. 
@@ -31,11 +30,27 @@ class MDWRequestParams// Aca se valida que exista todo lo que ingresa por reques
             case Emodels::MESA:
                 $isVal = MDWRequestParams::datosBasicosMesa($request);
                 break;
+            case Emodels::PEDIDO:
+                $isVal = MDWRequestParams::datosBasicosPedido($request);
+                break;
             case Emodels::PRODUCTO:
                 $isVal = MDWRequestParams::datosBasicosProducto($request);
                 break;
-            case Emodels::PEDIDO:
-                $isVal = MDWRequestParams::datosBasicosPedido($request);
+            case Emodels::ENCUESTA:
+                $isVal = MDWRequestParams::datosBasicosEncuesta($request);
+                break;
+            case Emodels::ESTADO:
+                $isVal = MDWRequestParams::datosBasicosEstado($request);
+                break;  
+            case Emodels::LOG://no va a venir por post
+                $isVal = false;
+                break;
+            case Emodels::SECTOR:
+                $isVal = false;
+                break;
+            case Emodels::OPERACION://no va a venir por post
+                $isVal = false;
+                break;
             default:
                 $isVal = false;
                 break;
@@ -43,13 +58,15 @@ class MDWRequestParams// Aca se valida que exista todo lo que ingresa por reques
         if($isVal)
         {
             $response = $handler->handle($request);
-            $contenidoAPI = (string) $response->getBody();
+            $contenidoAPI =  $response->getBody();
+            $contenidoAPI = json_decode($contenidoAPI);
             $response = new ResponseMW();
-            $response->getBody()->write($contenidoAPI);
+            $response->getBody()->write(json_encode($contenidoAPI));
         }else
         {
             $response = new ResponseMW();
-            $response->getBody()->write(json_encode('Error de request. Falta datos'));
+            $retorno = new Retorno(false,'Error de request. Falta datos',null);
+            $response->getBody()->write(json_encode($retorno));
         }
         return $response;
     }
@@ -59,12 +76,14 @@ class MDWRequestParams// Aca se valida que exista todo lo que ingresa por reques
         $body = $request->getParsedBody();
         if( isset($body['tipo_empleado']) &&
         isset($body['id_sector']) &&
+        isset($body['id_estado']) &&
         isset($body['nombre']) &&
         isset($body['apellido']) &&
         isset($body['email']) &&
         isset($body['clave']) &&
         isset($body['DNI']))
         {
+            
             $retorno = true;
         }
         return $retorno;
@@ -76,6 +95,8 @@ class MDWRequestParams// Aca se valida que exista todo lo que ingresa por reques
         if( isset($body['email']) &&
         isset($body['clave']))
         {
+            $body['email'] = strtoupper($body['email']);
+            $body['clave'] = strtoupper($body['clave']);
             $retorno = true;
         }
         return $retorno;
@@ -86,7 +107,8 @@ class MDWRequestParams// Aca se valida que exista todo lo que ingresa por reques
         $body = $request->getParsedBody();
         if( isset($body['id_empleado']) &&
         isset($body['id_cliente']) &&
-        isset($body['id_estado']))
+        isset($body['id_estado'])&&
+        isset($body['numero']))
         {
             $retorno = true;
         }
@@ -114,6 +136,33 @@ class MDWRequestParams// Aca se valida que exista todo lo que ingresa por reques
         isset($body['id_producto']) &&
         isset($body['cantidad']) &&
         isset($body['id_estado']))
+        {
+            $retorno = true;
+        }
+        return $retorno;
+    }
+    static private function datosBasicosEncuesta(Request $request)
+    {
+        $retorno = false;
+        $body = $request->getParsedBody();
+        if( isset($body['id_cliente']) &&
+            isset($body['mesa']) &&
+            isset($body['restaurante']) &&
+            isset($body['mozo']) &&
+            isset($body['cocinero']) &&
+            isset($body['id_ticket']) &&
+            isset($body['descripcion']))
+        {
+            $retorno = true;
+        }
+        return $retorno;
+    }
+    static private function datosBasicosEstado(Request $request)
+    {
+        $retorno = false;
+        $body = $request->getParsedBody();
+        if( isset($body['estado']) &&
+            isset($body['entidad']))
         {
             $retorno = true;
         }

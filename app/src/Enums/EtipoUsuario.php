@@ -83,56 +83,43 @@ class EtipoUsuario
                 return "";
         }
     }
-}
-
-/*
-namespace Enums;
-
-use MyCLabs\Enum\Enum;
-
-class EtipoUsuario extends Enum
-{
-    const SOCIO = 1;
-    const EMPLEADO = 2;
-    const CLIENTE = 3;
-
-    public static function esTipo($numero)
+    public static function validarSector($usuario,$producto)
     {
-        switch ($numero) {
-            case EtipoUsuario::SOCIO:
-                return true;
-            case EtipoUsuario::EMPLEADO:
-                return true;
-            case EtipoUsuario::CLIENTE:
-                return true;
+        $retorno = false;
+        switch($producto->id_sector)
+        {
+            case 1: //barra de tragos
+                if($usuario->tipo_empleado == EtipoUsuario::BARTENDER)
+                {
+                    $retorno = true;
+                }
+                break;
+            case 2: // Cerveceria
+                if($usuario->tipo_empleado == EtipoUsuario::CERVECERO)
+                {
+                    $retorno = true;
+                }
+                break;
+            case 3://Cocina
+                if($usuario->tipo_empleado == EtipoUsuario::COCINERO)
+                {
+                    $retorno = true;
+                }
+                break;
+            case 4://Candy Bar
+                if($usuario->tipo_empleado == EtipoUsuario::COCINERO)
+                {
+                    $retorno = true;
+                }
+                break;
             default:
-                return false;
+                break;
         }
-    }
-    public static function GetDescription($numero)
-    {
-        switch ($numero) {
-            case EtipoUsuario::SOCIO:
-                return "SOCIO";
-            case EtipoUsuario::EMPLEADO:
-                return "EMPLEADO";
-            case EtipoUsuario::CLIENTE:
-                return "CLIENTE";
+        if($usuario->tipo_empleado == EtipoUsuario::MOZO ||
+            $usuario->tipo_empleado == EtipoUsuario::SOCIO)
+        {
+            $retorno = true;
         }
-    }
-
-    public static function getVal($string)
-    {
-        switch ($string) {
-            case "SOCIO":
-                return EtipoUsuario::SOCIO;
-            case "EMPLEADO":
-                return EtipoUsuario::EMPLEADO;
-            case "CLIENTE":
-                return EtipoUsuario::CLIENTE;
-            default:
-                return "";
-        }
+        return $retorno;
     }
 }
-*/

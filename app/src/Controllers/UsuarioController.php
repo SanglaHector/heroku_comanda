@@ -6,6 +6,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Models\Usuario;
 use Components\Token;
+use Components\Retorno;
+use stdClass;
+
 class UsuarioController implements IDatabase
 { 
     function singIn(Request $request, Response $response, $args)
@@ -15,14 +18,17 @@ class UsuarioController implements IDatabase
         {
             $usuario = new Usuario();
             $usuario = $usuario->getByKey('email',$body['email']);
-            
+            $clave = crypt($body['clave'],'SHA-256');
             if( !is_null($usuario) && 
                 $usuario->email == $body['email'] 
-                && $usuario->clave == $body['clave'])
+                && $usuario->clave == $clave)
             {
-                $respuesta = Token::retornoToken($usuario,$usuario->tipo_empleado);
+                //tocar aca para ver que voy a guardar en el token
+                $respuesta = Token::retornoToken($usuario->id,$usuario->tipo_empleado);
+                $respuesta = new Retorno(true,$respuesta,null);
             }else{
                 $respuesta = "Datos incorrectos";
+                $respuesta = new Retorno(false,$respuesta,null);
             }
         }else{
             $respuesta = "Por favor, ingrese email y clave";
@@ -35,24 +41,25 @@ class UsuarioController implements IDatabase
         $body = $request->getParsedBody();
         
         $usuario = new Usuario();
-        $respuesta = $usuario::insert($body['tipo_empleado'],$body['id_sector'],$body['nombre'],
+        $respuesta = $usuario::insert($body['tipo_empleado'],$body['id_sector'],$body['id_estado'],$body['nombre'],
         $body['apellido'],$body['email'],$body['clave'],$body['DNI']);
+        $respuesta = new Retorno(true,$respuesta,null);
         $response->getBody()->write(json_encode($respuesta));
         
         return $response;
     }
-    
     function getOne(Request $request, Response $response, $args)
     {
         if(isset($args['id']))
         {
             $usuario = new Usuario();
             $respuesta = $usuario::deleteById($args['id']);
-            $response->getBody()->write(json_encode($respuesta));
+            $respuesta = new Retorno(true,$respuesta,null);
         }else{
             $respuesta = "Faltan cargar datos";
-            $response->getBody()->write(json_encode($respuesta));
+            $respuesta = new Retorno(false,$respuesta,null);
         }
+        $response->getBody()->write(json_encode($respuesta));
         return $response;
     }
     function get(Request $request, Response $response, $args)
@@ -74,6 +81,7 @@ class UsuarioController implements IDatabase
     {
         $usuario = new Usuario();
         $respuesta = $usuario::get();
+        $respuesta = new Retorno(true,$respuesta,null);
         $response->getBody()->write(json_encode($respuesta));
         return $response;
     }
@@ -82,6 +90,7 @@ class UsuarioController implements IDatabase
         $body = $request->getParsedBody();
         if( isset($body['tipo_empleado']) &&
             isset($body['id_sector']) &&
+            isset($body['id_estado']) &&
             isset($body['nombre']) &&
             isset($body['apellido']) &&
             isset($body['email']) &&
@@ -90,14 +99,15 @@ class UsuarioController implements IDatabase
             isset($args['id']))
             {
                 $usuario = new Usuario();
-                $respuesta = $usuario::updateById($body['tipo_empleado'],$body['id_sector'],$body['nombre'],
+                $respuesta = $usuario::updateById($body['tipo_empleado'],$body['id_sector'],$body['id_estado'],$body['nombre'],
                 $body['apellido'],$body['email'],$body['clave'],$body['DNI'],$args['id']);
-                $response->getBody()->write(json_encode($respuesta));
+                $respuesta = new Retorno(true,$respuesta,null);
             }else
             {
                 $respuesta = "Faltan cargar datos";
-                $response->getBody()->write(json_encode($respuesta));
+                $respuesta = new Retorno(false,$respuesta,null);
             }
+            $response->getBody()->write(json_encode($respuesta));
             return $response;
     }
     function delete(Request $request, Response $response, $args)
@@ -105,6 +115,7 @@ class UsuarioController implements IDatabase
         $body = $args['id'];
         $usuario = new Usuario();
         $respuesta = $usuario::deleteById($body);
+        $respuesta = new Retorno(true,$respuesta,null);
         $response->getBody()->write(json_encode($respuesta));
         return $response;
     }

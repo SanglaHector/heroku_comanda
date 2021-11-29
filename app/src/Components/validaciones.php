@@ -89,4 +89,31 @@ class Validaciones {
         }
         return true;
     }
+    static function validarHora($date, $format = 'H:i:s')
+    {
+        $array = explode(":",$date);
+        if(isset($array[0]) &&
+           isset($array[1]) &&
+           isset($array[2]))
+           {
+               if(Validaciones::validarNumerico($array))
+               {
+                   return true;
+               }else
+               {
+                   return false;
+               }
+           }else
+           {
+               return false;
+           }
+    }
+    static function formatearHora($strDate)
+    {
+        $array = explode(":",$strDate);
+        $array[0] = intval($array[0]);
+        $array[0] = intval($array[1]);
+        $array[0] = intval($array[2]);
+        return implode(':',$array);
+    }
 }

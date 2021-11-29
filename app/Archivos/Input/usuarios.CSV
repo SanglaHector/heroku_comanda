@@ -1,0 +1,3 @@
+id,tipo_empleado,id_sector,id_estado,nombre,apellido,email,clave,DNI;
+16,4,3,21,cargaUno,carga,cargaUno@gmail.com,123456,10234567;
+17,4,2,21,cargaDos,carga,cargaDos@gmail.com,123456,20234567;

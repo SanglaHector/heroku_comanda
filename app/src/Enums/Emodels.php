@@ -14,6 +14,7 @@ class Emodels
     const LOG = 8;
     const SECTOR = 9;
     const TICKET = 10;
+    const OPERACION = 11;
 
     public static function GetDescription($numero)
     {
@@ -38,6 +39,8 @@ class Emodels
                 return "SECTOR";
             case Emodels::TICKET:
                 return "TICKET";
+            case Emodels::OPERACION:
+                return "OPERACION";
         }
     }
 
@@ -64,6 +67,8 @@ class Emodels
                 return Emodels::SECTOR;
             case 'TICKET':
                 return Emodels::TICKET;
+            case 'OPERACION':
+                return Emodels::OPERACION;
             default:
                 return "";
         }

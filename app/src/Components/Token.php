@@ -4,38 +4,51 @@ namespace Components;
 
 use \Firebase\JWT\JWT;
 
-class Token
+class Token 
 {
-
-    static function retornoToken($objeto, $tipo)
+    static function retornoToken($id,$tipo)
     {
-        return Token::encodeJWT(Token::armoPayLoad(json_encode($objeto), $tipo));
+        return Token::encodeJWT(Token::armoPayLoad($id,$tipo));
     }
-    static function armoPayLoad($objeto, $tipo) //ver como armar payload con los datos necesarios
-    { //este 'dato' es todo el usuario, deberia guardar la fecha de inicio de sesión
+    static function armoPayLoad($id,$tipo) 
+    { 
         $inicio = time();
         return  array(
             'datos' => [
-                'objeto' => $objeto,
+                'id' => $id,
                 'inicio' => $inicio,
                 'tipo' => $tipo
             ]
         );
-        /*"datos"=> $datos,
-            "inicio" => $inicio,
-            "tipo" => $tipo*/
     }
     public static function autenticarToken($token)
     {
         $jwt = Token::decodeJWT($token);
-        if (isset($jwt->datos->objeto) && isset($jwt->datos->inicio) && isset($jwt->datos->tipo)) // si toco el payload tengo que tocar aca tambien, ademas puedo poner mas validaciones como tipo de rol, tiempo, etc.
+        if (isset($jwt->datos->id) && isset($jwt->datos->inicio)) // si toco el payload tengo que tocar aca tambien, ademas puedo poner mas validaciones como tipo de rol, tiempo, etc.
         {
-            /*if (($jwt->datos->inicio + 600) > time()) {
+            /*if (($jwt->datos->inicio + 600000000000) > time()) {
                 return false;
             }*/
-            return json_decode($jwt->datos->objeto); //ojo aca, que la autenticacion depende de como mande yo los tokens
+            return $jwt->datos->id; //ojo aca, que la autenticacion depende de como mande yo los tokens
         }
         return false;
+    }
+    public static function returnTipoToken($token)
+    {
+        $jwt = Token::decodeJWT($token);
+        if (isset($jwt->datos->id) && isset($jwt->datos->inicio) && isset($jwt->datos->tipo))
+        {
+            return $jwt->datos->tipo;
+        }
+        return false;
+    }
+    static function encodeJWT($payload, $key = "comanda")
+    {
+        return JWT::encode($payload, $key);
+    }
+    static function decodeJWT($jwt, $key = "comanda")
+    {
+        return JWT::decode($jwt, $key, array('HS256'));
     }
     public static function getRole($token, $key = "comanda")
     {
@@ -55,13 +68,5 @@ class Token
             }
         }
         return null;
-    }
-    static function encodeJWT($payload, $key = "comanda")
-    {
-        return JWT::encode($payload, $key);
-    }
-    static function decodeJWT($jwt, $key = "comanda")
-    {
-        return JWT::decode($jwt, $key, array('HS256'));
     }
 }

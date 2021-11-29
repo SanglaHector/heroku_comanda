@@ -22,11 +22,6 @@ class MDWVerificarRol // verifico el rol: empleado(mozo, bartender, etc), socio 
     {
         $header = Token::getHeader('token');
         $rol =  Token::getRole($header);
-        echo 'header';
-        var_dump($header);
-        echo PHP_EOL;
-        echo 'rol: ';
-        var_dump($rol);
         if(!is_null($rol) && in_array($rol,$this->roleArray))
         {
             $response = $handler->handle($request);
@@ -38,8 +33,7 @@ class MDWVerificarRol // verifico el rol: empleado(mozo, bartender, etc), socio 
             return $response;
         }
         $response = new ResponseMW(); 
-        //$retorno = new Retorno(false,'No posee privilegios para hacer esta consulta',null);
-        $retorno = new Retorno(false,'Rompo aca',null);
+        $retorno = new Retorno(false,'No posee privilegios para hacer esta consulta - verificar rol',null);
         $response->getBody()->write(json_encode($retorno));
         return $response;
     }

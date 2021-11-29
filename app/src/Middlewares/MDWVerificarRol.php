@@ -15,7 +15,6 @@ class MDWVerificarRol // verifico el rol: empleado(mozo, bartender, etc), socio 
 
     public function __construct($roleArray)
     {
-        var_dump($roleArray);
         $this->roleArray = $roleArray;
     }
 

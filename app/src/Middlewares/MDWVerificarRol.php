@@ -22,6 +22,11 @@ class MDWVerificarRol // verifico el rol: empleado(mozo, bartender, etc), socio 
     {
         $header = Token::getHeader('token');
         $rol =  Token::getRole($header);
+        echo 'header';
+        var_dump($header);
+        echo PHP_EOL;
+        echo 'rol: ';
+        var_dump($rol);
         if(!is_null($rol) && in_array($rol,$this->roleArray))
         {
             $response = $handler->handle($request);

@@ -33,7 +33,7 @@ use Middlewares\MDWRequestParams;
 use Middlewares\MDWConvertToPDF;
 $database = new Database();
 $app = AppFactory::create();
-//$app->setBasePath('/herokucomanda/app');//localhost
+$app->setBasePath('/herokucomanda/app');//localhost
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 

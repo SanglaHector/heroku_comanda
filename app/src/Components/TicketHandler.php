@@ -21,7 +21,8 @@ class TicketHandler
                 foreach ($pedidos as $pedido ) {
                     $producto = interClass::retornarProducto($pedido->id_producto);
                     $precioTotal = ($pedido->cantidad * $producto->precio) + $precioTotal;
-                    if($pedido->id_estado != Eestado::SERVIDO)
+                    if($pedido->id_estado != Eestado::SERVIDO ||
+                       $pedido->id_estado != Eestado::CANCELADO)
                     {
                         StateHandler::forzarEstadoPedido($pedido->id);
                     }

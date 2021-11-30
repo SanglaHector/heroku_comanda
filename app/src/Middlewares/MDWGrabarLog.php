@@ -8,8 +8,8 @@ use Slim\Psr7\Response as ResponseMW;
 
 use Components\Token;
 use Components\Retorno;
-use Components\TratarEnums;
 use Enums\Eestado;
+use Enums\EtipoUsuario;
 use Models\Log;
 use Models\Usuario;
 
@@ -29,7 +29,7 @@ class MDWGrabarLog // Cargo la tabla de logs
             if (isset($usuario->id)) 
             {
                 $log = Log::getLastLog($usuario->id);
-                $sector = TratarEnums::returnSector($usuario->tipo_empleado);
+                $sector = EtipoUsuario::returnSector($usuario->tipo_empleado);
                 if (!is_null($log)) //si no es nulo es por que hay un log
                 {
                     if($log->in_out)//ya esta logueado

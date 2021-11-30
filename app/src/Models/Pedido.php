@@ -3,6 +3,7 @@ namespace Models;
 
 use Components\Validaciones;
 use DateTime;
+use Enums\Eestado;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Date;
@@ -147,5 +148,25 @@ class Pedido extends Model
         $string = implode(',',$array);
         $string = $string.';'.PHP_EOL;
         return $string;
+    }
+    static function masVendido()
+    {
+        $models = Pedido::join('productos','pedidos.id_producto','=','productos.id')
+        ->select(Pedido::raw('sum(pedidos.cantidad),productos.nombre'))
+        ->groupBy('pedidos.id_producto')
+        ->get();
+        return $models;
+    }
+    static function fueraDeTiempo()
+    {
+        $models = Pedido::join('productos','pedidos.id_producto','=','productos.id')
+        ->select(Pedido::raw('hora_estimada,hora_final,productos.nombre'))
+        ->whereRaw('hora_estimada < hora_final' )
+        ->get();
+        return $models;
+    }
+    static function cancelados()
+    {
+        return Pedido::getAllByKey('id_estado',Eestado::CANCELADO);
     }
 }

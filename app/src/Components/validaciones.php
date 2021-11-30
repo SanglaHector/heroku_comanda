@@ -116,4 +116,18 @@ class Validaciones {
         $array[0] = intval($array[2]);
         return implode(':',$array);
     }
+    static function validarFecha($fecha,$format = 'Y-m-d')
+    {
+        $arr = explode('-',$fecha);
+        if(isset($arr[0])
+         && isset($arr[1])
+         && isset($arr[2]))
+        {
+            if(Validaciones::validarNumerico($arr))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

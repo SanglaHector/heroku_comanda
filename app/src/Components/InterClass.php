@@ -160,8 +160,6 @@ class InterClass
     }
     static function retornarTicket()
     {
-        /*$cliente = InterClass::retornarUsuarioPorToken();
-        $cliente = InterClass::retornarClienteById($cliente->id);*/
         $cliente = InterClass::retornarUsuarioPorToken();
         $mesa = Mesa::retornarMesaCliente($cliente->id);
         if(!is_null($mesa))//si trajo una mesa 
@@ -183,10 +181,4 @@ class InterClass
     {
         return Sector::getById($id_sector);
     }
-    
-    //pedidos con tiempo y estado para socios
-    
-    //mesas y sus estados -- listo?
-    //comentarios por valoracion 
-    //mesas por usabilidad
 }

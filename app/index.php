@@ -12,14 +12,11 @@ use Controllers\ClienteController;
 use Controllers\ConsultaController;
 use Controllers\CSVController;
 use Controllers\EncuestaController;
-use Controllers\EstadoController;
 use Controllers\LocalController;
 use Controllers\LogController;
 use Controllers\MesaController;
 use Controllers\PedidoController;
 use Controllers\ProductoController;
-use Controllers\PruebaController;
-use Controllers\SectorController;
 use Controllers\TicketController;
 use Controllers\UsuarioController;
 //Enumerados
@@ -143,9 +140,20 @@ $app->group('/CSV', function (RouteCollectorProxy $group) {
 });
 //consultas
 $app->group('/Consulta', function (RouteCollectorProxy $group) {
+    //mesas
     $group->get('/mesaMasUsada', ConsultaController::class . ':mesaMasUsada'); 
     $group->get('/mesaMasFacturo', ConsultaController::class . ':mesaMasFacturo'); 
     $group->get('/mesaMayorImporte', ConsultaController::class . ':mesaMayorImporte'); 
+    $group->get('/mesaMayorImporte/{fDesde}/{fHasta}', ConsultaController::class . ':masFacturoEntreFechas'); 
+    //pedidos
+    $group->get('/productoMasVendido', ConsultaController::class . ':productoMasVendido'); 
+    $group->get('/fueraDeTiempo', ConsultaController::class . ':pedidosFueraDeTiempo'); 
+    $group->get('/cancelados', ConsultaController::class . ':pedidosCancelados'); 
+    //empleados
+    $group->get('/puntoA', ConsultaController::class . ':ingresos'); 
+    $group->get('/puntoB/{sector}', ConsultaController::class . ':cantidadOperaciones'); 
+    $group->get('/puntoC/{sector}', ConsultaController::class . ':cantidadOperacionesPorUsuario'); 
+    $group->get('/puntoD', ConsultaController::class . ':operacionesPorUsuario'); 
 });
 //********** 2021 */
 //❏ 1- Una moza toma el pedido de una:
@@ -176,13 +184,7 @@ $app->group('/Encuesta', function (RouteCollectorProxy $group) {
     $group->post('[/]', EncuestaController::class . ':addOne');
     $group->get('s[/{clave}[/{valor}]]', EncuestaController::class . ':getAll');
 });
-//estado
-/*$app->group('/Estado', function (RouteCollectorProxy $group) {
-    $group->get('s[/{clave}[/{valor}]]', EstadoController::class . ':getAll');
-    $group->post('[/]', EstadoController::class . ':addOne');
-    $group->delete('/delete/{id}', EstadoController::class . ':delete');
-    $group->post('/{id}', EstadoController::class . ':update');
-});*/
+
 //log
 $app->group('/Log', function (RouteCollectorProxy $group) {
     $group->get('s[/{clave}[/{valor}]]', LogController::class . ':getAll');
@@ -190,14 +192,7 @@ $app->group('/Log', function (RouteCollectorProxy $group) {
     $group->delete('/delete/{id}', LogController::class . ':delete');
     $group->post('/{id}', LogController::class . ':update');
 });
-//sector
-/*
-$app->group('/Sector', function (RouteCollectorProxy $group) {
-    $group->get('s[/{clave}[/{valor}]]', SectorController::class . ':getAll');
-    $group->post('[/]', SectorController::class . ':addOne');
-    $group->delete('/delete/{id}', SectorController::class . ':delete');
-    $group->post('/{id}', SectorController::class . ':update');
-});*/
+
 //ticket
 $app->group('/Ticket', function (RouteCollectorProxy $group) {
     $group->get('s[/{clave}[/{valor}]]', TicketController::class . ':getAll')
@@ -213,6 +208,5 @@ $app->group('/Photo',function(RouteCollectorProxy $group) {
 })->add(new MDWVerificarToken());
 
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
-//$returnJson = $app->add(new MDWReturn());
 $app->run();
 

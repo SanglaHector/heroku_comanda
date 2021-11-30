@@ -33,7 +33,7 @@ class MDWVerificarRol // verifico el rol: empleado(mozo, bartender, etc), socio 
             return $response;
         }
         $response = new ResponseMW(); 
-        $retorno = new Retorno(false,'No posee privilegios para hacer esta consulta - verificar rol',null);
+        $retorno = new Retorno(false,'No posee privilegios para hacer esta consulta.',null);
         $response->getBody()->write(json_encode($retorno));
         return $response;
     }

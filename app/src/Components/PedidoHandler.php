@@ -125,4 +125,8 @@ class PedidoHandler{
         }
         return $retorno;
     }
+    static function cancelarPedido($id_pedido)
+    {
+        
+    }
 }

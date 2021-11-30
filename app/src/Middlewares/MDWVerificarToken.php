@@ -15,7 +15,6 @@ class MDWVerificarToken
     public function __invoke(Request $request, RequestHandler $handler) : ResponseMW
     {//verifico si existe
         $header = Token::getHeader('token');//aca me traigo el header que ingresa el cliente por peticion
-        var_dump($header);
         if(!is_null($header))
         {
             $id = Token::autenticarToken($header);//retorna todo el usuario 
@@ -57,7 +56,7 @@ class MDWVerificarToken
             }
         }
         $response = new ResponseMW();
-        $retorno = new Retorno(false,'No posee privilegios para hacer esta consulta - verificar token',null);
+        $retorno = new Retorno(false,'No posee privilegios para hacer esta consulta.',null);
         $response->getBody()->write(json_encode($retorno));
         return $response;
     }

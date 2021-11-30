@@ -95,4 +95,12 @@ class Log extends Model
         }
         return $logs;
     }
+    static function ingresos()
+    {
+        $models = Log::join('usuarios','logs.id_usuario','=','usuarios.id')
+        ->select(Log::raw('logs.created_at,usuarios.apellido'))
+        ->where('logs.in_out','=', 1)
+        ->get();
+        return $models;
+    }
 }

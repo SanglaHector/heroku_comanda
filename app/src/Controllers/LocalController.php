@@ -15,5 +15,4 @@ class LocalController{
         $response->getBody()->write(json_encode($respuesta));
         return $response;
     }
-
 }

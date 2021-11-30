@@ -62,6 +62,8 @@ class Token
     public static function getHeader($key)
     {
         $header = getallheaders();
+       /* $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1])*/
         if ($header != false) {
             if (isset($header[$key]) && !empty($header[$key])) {
                 return $header[$key];

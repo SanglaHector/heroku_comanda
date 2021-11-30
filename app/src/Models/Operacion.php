@@ -10,7 +10,6 @@ class Operacion extends Model
 {
     protected $table = 'operaciones';
     protected $primaryKey = 'id';
-    use SoftDeletes;
     const ALTA = 'A';
     const BAJA= 'B';
     const MODIFICACION_ANTES = 'MA';
@@ -20,7 +19,6 @@ class Operacion extends Model
         $modelo = new Operacion();
         $modelo->entidad = $entidad;
         $modelo->accion = $accion;
-     //   $modelo->data = $data;
         $modelo->data = Operacion::returnDataByModel($entidad,$data);
         $usuario = InterClass::retornarUsuarioPorToken();
         $modelo->id_usu_alta = $usuario->id;
@@ -194,5 +192,38 @@ class Operacion extends Model
         $standar->precio_final = $dataIn->precio_final;
         $dataOut = json_encode($standar);
         return $dataOut;
+    }
+    static function cantidadOperaciones($sector)
+    {
+        $models = Operacion::join('usuarios','operaciones.id_usu_alta','=','usuarios.id')
+        ->where('entidad','=', "pedido")
+        ->where('tipo_usu_alta','=', "USUARIO")
+        ->where('accion', '=', 'MA')
+        ->where('usuarios.id_sector','=',$sector)
+        ->count();
+        return $models;
+    }
+    static function cantidadOperacionesPorUsu($sector)
+    {
+        $models = Operacion::join('usuarios','operaciones.id_usu_alta','=','usuarios.id')
+        ->select(Operacion::raw('count(*),usuarios.apellido'))
+        ->where('entidad','=', "pedido")
+        ->where('tipo_usu_alta','=', "USUARIO")
+        ->where('accion', '=', 'MA')
+        ->where('usuarios.id_sector','=',$sector)
+        ->groupBy('usuarios.apellido')
+        ->get();
+        return $models;
+    }
+    static function operacionesPorUsuario()
+    {
+        $models = Operacion::join('usuarios','operaciones.id_usu_alta','=','usuarios.id')
+        ->select(Operacion::raw('count(*),usuarios.apellido'))
+        ->where('entidad','=', "pedido")
+        ->where('tipo_usu_alta','=', "USUARIO")
+        ->where('accion', '=', 'MA')
+        ->groupBy('usuarios.apellido')
+        ->get();
+        return $models;
     }
 }

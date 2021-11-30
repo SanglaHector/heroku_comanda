@@ -198,6 +198,17 @@ class Mesa extends Model
     {
         $models = Mesa::join('tickets','mesas.id','=','tickets.id_mesa')
         ->select(Mesa::raw('max(precio_total),mesas.numero'))
+        ->groupBy('numero')
+        ->get();
+        return $models;
+    }
+    static function masFacturoEntreFechas($fechaDesde,$fechaHasta)
+    {
+        $models = Mesa::join('tickets','mesas.id','=','tickets.id_mesa')
+        ->select(Mesa::raw('sum(precio_total),mesas.numero'))
+        ->where('tickets.created_at','>=', $fechaDesde)
+        ->where('tickets.created_at','<=', $fechaHasta)
+        ->groupBy('numero')
         ->get();
         return $models;
     }

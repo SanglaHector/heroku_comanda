@@ -66,7 +66,7 @@ class Archivo
             }
         }
         return $array;
-    }
+    } 
     static function guardarImagen($file,$destino,$nombre)
     {
         $retorno = false;

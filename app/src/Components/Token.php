@@ -77,6 +77,7 @@ class Token
         $header = $request->getHeaderLine('Authorization');
         $token =  trim(explode("Bearer", $header)[1]);
         putenv("TOKEN=$token");
+        var_dump($token);
         return $token;
     }
 }

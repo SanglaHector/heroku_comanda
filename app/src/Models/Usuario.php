@@ -2,7 +2,6 @@
 namespace Models;
 
 use Enums\Eestado;
-use Components\Token;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Usuario extends Model
@@ -123,13 +122,6 @@ class Usuario extends Model
             ->get();
         }
         return $usuarios;
-    }
-    
-    static function returnUsuarioByToken($token)
-    {
-        $header = Token::getHeader('token');
-        $stdClass = Token::autenticarToken($header);
-        return Usuario::returnByKeyDB($stdClass->id,'id',0);
     }
     static function convertToModelCSV($array)
     {

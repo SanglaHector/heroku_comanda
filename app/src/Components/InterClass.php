@@ -59,7 +59,8 @@ class InterClass
     static function retornarUsuarioPorToken()
     {
         $retorno = null;
-        $header = Token::getHeader('token');//aca me traigo el header que ingresa el cliente por peticion
+      //  $header = Token::getHeader('token');//aca me traigo el header que ingresa el cliente por peticion
+        $header = getenv("TOKEN");//prueba
         $id = Token::autenticarToken($header);
         $tipo = Token::returnTipoToken($header);
         if($tipo == EtipoUsuario::CLIENTE)

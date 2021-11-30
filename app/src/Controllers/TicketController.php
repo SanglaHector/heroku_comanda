@@ -8,6 +8,8 @@ use Models\Ticket;
 use Components\Retorno;
 use Components\Archivo;
 use Components\InterClass;
+use Components\TicketHandler;
+use Enums\Eestado;
 
 class TicketController implements IDatabase
 {
@@ -131,6 +133,36 @@ class TicketController implements IDatabase
         {
             $respuesta = new Retorno(true,"Por favor, cargar todos los datos", null);
         }
+        $response->getBody()->write(json_encode($respuesta));
+        return $response;
+    }
+    function cancelar(Request $request, Response $response ,$args)
+    {
+        $body = $args['id'];
+        if(isset($args['id']))
+        {
+            $ticket = Ticket::getById($args['id']);
+            $cliente = InterClass::retornarUsuarioPorToken();
+            if(!is_null($ticket))
+            {
+                $mesa = InterClass::returnMesaByTicket($ticket);
+                if(!is_null($cliente)
+                && !is_null($mesa)
+                && $cliente->id == $mesa->id_cliente)
+                {
+                    $respuesta = TicketHandler::cerrarTicket($cliente,Eestado::CANCELADO);
+                }else
+                {
+                    $respuesta = new Retorno(true,"Numero de ticket no pertenece al usuario.",null);
+                }
+            }else{
+                $respuesta = new Retorno(true,"Numero de ticket inexistente",null);
+            }
+        }else
+        {
+            $respuesta = new Retorno(true,"Ingrese un numero de ticket.",null);
+        }
+        $respuesta = new Retorno(true,$respuesta,null);
         $response->getBody()->write(json_encode($respuesta));
         return $response;
     }

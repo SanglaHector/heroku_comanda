@@ -3,6 +3,9 @@
 namespace Components;
 
 use \Firebase\JWT\JWT;
+use GuzzleHttp\Psr7\Request;
+//use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface;
 
 class Token 
 {
@@ -62,13 +65,18 @@ class Token
     public static function getHeader($key)
     {
         $header = getallheaders();
-       /* $header = $request->getHeaderLine('Authorization');
-        $token = trim(explode("Bearer", $header)[1])*/
         if ($header != false) {
             if (isset($header[$key]) && !empty($header[$key])) {
                 return $header[$key];
             }
         }
         return null;
+    }
+    public static function getAutentication($request)
+    {
+        $header = $request->getHeaderLine('Authorization');
+        $token =  trim(explode("Bearer", $header)[1]);
+        putenv("TOKEN=$token");
+        return $token;
     }
 }

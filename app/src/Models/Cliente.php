@@ -1,8 +1,6 @@
 <?php
 namespace Models;
 
-use Enums\Eestado;
-use Components\Token;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Cliente extends Model 
@@ -81,13 +79,6 @@ class Cliente extends Model
             return 'Cliente inexistente';
         }
         return $model;
-    }
-    
-    static function returnClienteByToken($token)
-    {
-        $header = Token::getHeader('token');
-        $stdClass = Token::autenticarToken($header);
-        return Cliente::returnByKeyDB($stdClass->id,'id',0);
     }
     static function convertToModelCSV($array)
     {

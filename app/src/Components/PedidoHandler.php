@@ -96,7 +96,8 @@ class PedidoHandler{
                 }
             }
         }else{//cliente
-            $ticket = InterClass::retornarTicket();
+            $ticket = InterClass::retornarTicket();//trae el ticke de la mesa correspondiente
+            //tambien tienen en cuenta en traer la ultima mesa(en caso del que el cliente tenga una mesa de otros dia).
             foreach ($pedidos as $pedido ){
                 if($pedido->id_ticket == $ticket->id)
                 {

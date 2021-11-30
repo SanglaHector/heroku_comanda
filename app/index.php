@@ -154,7 +154,7 @@ $app->group('/Consulta', function (RouteCollectorProxy $group) {
     $group->get('/puntoB/{sector}', ConsultaController::class . ':cantidadOperaciones'); 
     $group->get('/puntoC/{sector}', ConsultaController::class . ':cantidadOperacionesPorUsuario'); 
     $group->get('/puntoD', ConsultaController::class . ':operacionesPorUsuario'); 
-});
+})->add(new MDWVerificarToken());;
 //********** 2021 */
 //❏ 1- Una moza toma el pedido de una:
 //❏ Una milanesa a caballo
@@ -199,6 +199,7 @@ $app->group('/Ticket', function (RouteCollectorProxy $group) {
     ->add(new MDWConvertToPDF('Tickets'));
     $group->post('[/]', TicketController::class . ':addOne');
     $group->delete('/delete/{id}', TicketController::class . ':delete');
+    $group->delete('/cancelar/{id}', TicketController::class . ':cancelar');
     $group->post('/{id}', TicketController::class . ':update');
 })->add(new MDWVerificarToken());
 //imagen

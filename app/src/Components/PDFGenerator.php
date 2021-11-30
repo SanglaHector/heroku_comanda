@@ -142,6 +142,7 @@ class PDFGenerator
             $pdf->Cell(25,10, $model->stock,0,0,'C');
             $pdf->Cell(30,10, $precio,0,1,'L');
         }
+        //$pdf->Output('D','productos.PDF');
         $pdf->Output();
     }
     static function TicketsToPDF($models)

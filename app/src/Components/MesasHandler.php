@@ -26,7 +26,7 @@ class MesasHandler{
                 $ticket->precio_total == 0)
                 {
                     $cliente = InterClass::retornarClienteByTicket($ticket->id);
-                    TicketHandler::cerrarTicket($cliente);
+                    TicketHandler::cerrarTicket($cliente,Eestado::SERVIDO);
                 }
         }
         

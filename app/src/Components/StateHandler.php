@@ -90,13 +90,19 @@ class StateHandler
         }
         return $retorno;
     }
-    static function cambiarEstadoMesa($id_mesa)
+    static function cambiarEstadoMesa($id_mesa,$id_estado = 0)
     {
         $retorno = false;
         $mesa = Mesa::getById($id_mesa);
         if(!is_null($mesa))
         {
-            $estadoSiguiente = Eestado::getNext($mesa->id_estado);
+            if($id_estado == 0)
+            {
+                $estadoSiguiente = Eestado::getNext($mesa->id_estado);
+            }else
+            {
+                $estadoSiguiente = $id_estado;
+            }
             if($estadoSiguiente !=  false)
             {
                 Mesa::updateById($mesa->id_empleado,
@@ -110,7 +116,7 @@ class StateHandler
         }
         return $retorno;
     }
-    static function forzarEstadoPedido($id_pedido)
+    static function forzarEstadoPedido($id_pedido,$id_estado)
     {
         $pedido = Pedido::getById($id_pedido);
         if(!is_null($pedido))
@@ -118,7 +124,7 @@ class StateHandler
             Pedido::updateById($pedido->id_ticket,
                             $pedido->id_producto,
                             $pedido->cantidad,
-                            Eestado::SERVIDO,
+                            $id_estado,
                             $pedido->id,
                             $pedido->hora_estimada,
                             $pedido->hora_final);

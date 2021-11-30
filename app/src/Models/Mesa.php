@@ -82,8 +82,9 @@ class Mesa extends Model
     {
         $retorno = null;
         $mesa = Mesa::where($key,$value)
-                    ->where('id_estado',13)
-                    ->limit(1)
+                    ->where('id_estado','>=',12)
+                    ->where('id_estado','<=',13)
+                    ->limit(1) 
                     ->get();
         foreach ($mesa as $m ) {
             $retorno = $m;

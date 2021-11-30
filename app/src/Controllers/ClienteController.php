@@ -125,7 +125,7 @@ class ClienteController implements IDatabase
     {
         $cliente = InterClass::retornarUsuarioPorToken();
         $cliente = Cliente::getById($cliente->id);
-        $precioFinal = TicketHandler::cerrarTicket($cliente);
+        $precioFinal = TicketHandler::cerrarTicket($cliente,Eestado::SERVIDO);
         if(!is_null($precioFinal))
         {
             $response->getBody()->write(json_encode('El total de su pedido es de: $'.$precioFinal));

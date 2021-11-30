@@ -16,10 +16,8 @@ class MDWVerificarToken
     {//verifico si existe
     //    $header = Token::getHeader('token');//aca me traigo el header que ingresa el cliente por peticion
         $header = Token::getAutentication($request);
-        var_dump($header);
         if(!is_null($header))
         {
-            echo 'autentico token';
             $id = Token::autenticarToken($header);//retorna todo el usuario 
             $tipo = Token::returnTipoToken($header);
             if($tipo == 6) //cliente

@@ -10,6 +10,7 @@ use Components\InterClass;
 use Components\StateHandler;
 use Components\PedidoHandler;
 use Enums\Eestado;
+use Exception;
 
 class PedidoController implements IDatabase
 {
@@ -119,8 +120,13 @@ class PedidoController implements IDatabase
     }
     function getAll(Request $request, Response $response, $args)
     {
-        $pedidos = PedidoHandler::filtrarPedidos();
-        $respuesta = new Retorno(true,$pedidos,null);
+        try{
+            $pedidos = PedidoHandler::filtrarPedidos();
+            $respuesta = new Retorno(true,$pedidos,null);
+        }catch(Exception $e)
+        {
+            $respuesta = new Retorno(false,"Ha ocurrido un error inesperado",$e->getMessage());
+        }
         $response->getBody()->write(json_encode($respuesta));
         return $response;
     }

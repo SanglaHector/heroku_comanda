@@ -7,7 +7,11 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Models\Usuario;
 use Components\Token;
 use Components\Retorno;
+use Components\InterClass;
+use Components\LogHandler;
+use Enums\Eestado;
 use stdClass;
+use Exception;
 
 class UsuarioController implements IDatabase
 { 
@@ -32,6 +36,30 @@ class UsuarioController implements IDatabase
             }
         }else{
             $respuesta = "Por favor, ingrese email y clave";
+        }
+        $response->getBody()->write(json_encode($respuesta));
+        return $response;
+    }
+    function singOut(Request $request, Response $response, $args)
+    {
+        try
+        {
+            $model = InterClass::retornarUsuarioPorToken();
+            if(!is_null($model)){
+                if($model->id_estado == Eestado::TRABAJANDO)
+                {
+                    LogHandler::desloguearEmpleado($model);
+                    $respuesta = new Retorno(true,"Que descances.",null);
+                }else
+                {
+                    $respuesta = new Retorno(true,"Usted no se encuentra trabajando.",null);
+                }
+            }else{
+                $respuesta = new Retorno(false,"Usted no se encuentra registrado.",null);
+            }
+        }catch(Exception $e)
+        {
+            $respuesta = new Retorno(false,"Ha ocurrido un error inesperado",$e->getMessage());
         }
         $response->getBody()->write(json_encode($respuesta));
         return $response;

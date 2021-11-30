@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use Components\InterClass;
+use Components\LogHandler;
 use Interfaces\IDatabase;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -9,31 +10,55 @@ use Models\Cliente;
 use Components\Token;
 use Components\Retorno;
 use Components\TicketHandler;
-use Components\Archivo;
-use Components\LoadCSV;
 use Enums\Eestado;
 use Enums\EtipoUsuario;
+use Exception;
+
 class ClienteController implements IDatabase
 {
     function singIn(Request $request, Response $response, $args)
     {
-        $body = $request->getParsedBody();
-        if( isset($body['email']) && isset($body['clave']))
+        try
         {
-            $model = new Cliente();
-            $model = $model->getByKey('email',$body['email']);
-            $clave = crypt($body['clave'],'SHA-256');
-            if( !is_null($model) && 
-                $model->email == $body['email'] 
-                && $model->clave == $clave)
+            $body = $request->getParsedBody();
+            if( isset($body['email']) && isset($body['clave']))
             {
-                $tipoUsuario = EtipoUsuario::CLIENTE;
-                $respuesta = new Retorno(true,Token::retornoToken($model->id,$tipoUsuario),null);
+                $model = new Cliente();
+                $model = $model->getByKey('email',$body['email']);
+                $clave = crypt($body['clave'],'SHA-256');
+                if( !is_null($model) && 
+                    $model->email == $body['email'] 
+                    && $model->clave == $clave)
+                {
+                    $tipoUsuario = EtipoUsuario::CLIENTE;
+                    $respuesta = new Retorno(true,Token::retornoToken($model->id,$tipoUsuario),null);
+                }else{
+                    $respuesta = new Retorno(false,"Datos incorrectos",null);
+                }
             }else{
-                $respuesta = new Retorno(false,"Datos incorrectos",null);
+                $respuesta = new Retorno(false,"Por favor, ingrese email y clave",null);
             }
-        }else{
-            $respuesta = new Retorno(false,"Por favor, ingrese email y clave",null);
+        }catch(Exception $e)
+        {
+            $respuesta = new Retorno(false,"Ha ocurrido un error inesperado",$e->getMessage());
+        }
+        $response->getBody()->write(json_encode($respuesta));
+        return $response;
+    }
+    function singOut(Request $request, Response $response, $args)
+    {
+        try
+        {
+            $model = InterClass::retornarUsuarioPorToken();
+            if(!is_null($model)){
+                LogHandler::desloguearCliente($model);
+                $respuesta = new Retorno(true,"Gracias por venir!!",null);
+            }else{
+                $respuesta = new Retorno(true,"Usted no se encuentra registrado.",null);
+            }
+        }catch(Exception $e)
+        {
+            $respuesta = new Retorno(false,"Ha ocurrido un error inesperado",$e->getMessage());
         }
         $response->getBody()->write(json_encode($respuesta));
         return $response;

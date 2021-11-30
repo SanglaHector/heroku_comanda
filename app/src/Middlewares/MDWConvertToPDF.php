@@ -25,31 +25,34 @@ class MDWConvertToPDF
         $contenidoAPI = $response->getBody();
         //trato el contenidoAPI 
         $contenidoAPI = json_decode($contenidoAPI);
-        //genero nueva respuesta
-        $data = $contenidoAPI->data;
-        if(is_array($data))
+        if($contenidoAPI->ok)
         {
-            switch($this->listado)
+            //genero nueva respuesta
+            $data = $contenidoAPI->data;
+            if(is_array($data))
             {
-                case 'Clientes':
-                    PDFGenerator::ClienteToPDF($data);
-                    break;
-                case 'Mesas':
-                    PDFGenerator::MesasToPDF($data);
-                    break;
-                case 'Pedidos':
-                    PDFGenerator::PedidosToPDF($data);
-                    break;
-                case 'Productos':
-                    PDFGenerator::ProductosToPDF($data);
-                case 'Tickets':
-                    PDFGenerator::TicketsToPDF($data);
-                    break;
-                case 'Usuarios':
-                    PDFGenerator::UsuariosToPDF($data);
-                    break;
-                default: 
-                    break;  
+                switch($this->listado)
+                {
+                    case 'Clientes':
+                        PDFGenerator::ClienteToPDF($data);
+                        break;
+                    case 'Mesas':
+                        PDFGenerator::MesasToPDF($data);
+                        break;
+                    case 'Pedidos':
+                        PDFGenerator::PedidosToPDF($data);
+                        break;
+                    case 'Productos':
+                        PDFGenerator::ProductosToPDF($data);
+                    case 'Tickets':
+                        PDFGenerator::TicketsToPDF($data);
+                        break;
+                    case 'Usuarios':
+                        PDFGenerator::UsuariosToPDF($data);
+                        break;
+                    default: 
+                        break;  
+                }
             }
         }
         $response = new ResponseMW();

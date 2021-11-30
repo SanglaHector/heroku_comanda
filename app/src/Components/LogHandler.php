@@ -30,4 +30,24 @@ class LogHandler{
             }
         }
     }
+    static function desloguearEmpleado($empleado)
+    {
+        Usuario::updateById($empleado->tipo_empleado,
+                                $empleado->id_sector,
+                                Eestado::FUERA,
+                                $empleado->nombre,
+                                $empleado->apellido,
+                                $empleado->email,
+                                $empleado->clave,
+                                $empleado->DNI,
+                                $empleado->id);
+        $log = Log::getLastLog($empleado->id);
+        if($log->in_out)
+        {
+            Log::insert($empleado->id,$empleado->id_sector,0);//hacer lo mismo para clientes
+        }
+    }
+    static function desloguearCliente($cliente){
+        Cliente::updateById($cliente->email,$cliente->clave,Eestado::SIN_MESA,$cliente->id);
+    }
 }

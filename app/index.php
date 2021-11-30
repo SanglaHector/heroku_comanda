@@ -40,11 +40,12 @@ $app->group('/Sing', function (RouteCollectorProxy $group) {
     ->add(new MDWGrabarLog());
     $group->post('In/clientes', ClienteController::class . ':singIn');
     
-    $group->post('Up/empleados', UsuarioController::class . ':singUp');//sin probar
-    $group->post('Up/clientes', ClienteController::class . ':singUp');//sin probar
-    
-    $group->post('Out/empleados', UsuarioController::class . ':singOut');//sin uso - para logs
-    $group->post('Out/clientes', ClienteController::class . ':singOut');//sin uso - para logs
+    $group->put('Out/empleados', UsuarioController::class . ':singOut')
+    ->add(new MDWVerificarRol([EtipoUsuario::MOZO,EtipoUsuario::CERVECERO,EtipoUsuario::COCINERO,EtipoUsuario::SOCIO,EtipoUsuario::BARTENDER]))
+    ->add(new MDWVerificarToken());
+    $group->put('Out/clientes', ClienteController::class . ':singOut')
+    ->add(new MDWVerificarRol([EtipoUsuario::CLIENTE]))
+    ->add(new MDWVerificarToken());
 });
 //local
 $app->group('/Local', function (RouteCollectorProxy $group) {
@@ -155,30 +156,6 @@ $app->group('/Consulta', function (RouteCollectorProxy $group) {
     $group->get('/puntoC/{sector}', ConsultaController::class . ':cantidadOperacionesPorUsuario'); 
     $group->get('/puntoD', ConsultaController::class . ':operacionesPorUsuario'); 
 })->add(new MDWVerificarToken());;
-//********** 2021 */
-//❏ 1- Una moza toma el pedido de una:
-//❏ Una milanesa a caballo
-//❏ Dos hamburguesas de garbanzo
-//❏ Una corona
-//❏ Un Daikiri
-//❏ 2- El mozo saca una foto de la mesa y lo relaciona con el pedido.
-//❏ 3- Cada empleado responsable de cada producto del pedido , debe:
-//❏ Listar todos los productos pendientes de este tipo de empleado.
-//❏ Debe cambiar el estado a “en preparación” y agregarle el tiempo de preparación.
-//❏ 4- El cliente ingresa el código de la mesa junto con el número de pedido y ve el tiempo de
-//demora de su pedido.
-//❏ 5- Alguno de los socios pide el listado de pedidos y el tiempo de demora de ese pedido.
-//❏ 6- Cada empleado responsable de cada producto del pedido, debe:
-//❏ Listar todos los productos pendientes de este tipo de empleado
-//❏ Debe cambiar el estado a “listo para servir” .
-//❏ 7- La moza se fija los pedidos que están listos para servir , cambia el estado de la mesa,
-//❏ 8- Alguno de los socios pide el listado de las mesas y sus estados .
-//❏ 9- La moza cobra la cuenta.
-//❏ 10- Alguno de los socios cierra la mesa.
-//❏ 11- El cliente ingresa el código de mesa y el del pedido junto con los datos de la encuesta.
-//❏ 12- Alguno de los socios pide los mejores comentarios
-//❏ 13- Alguno de los socios pide la mesa más usada.
-///////////*******************SIN PROBAR ////////////////////////////////////////////////////////////*/
 //encuesta
 $app->group('/Encuesta', function (RouteCollectorProxy $group) {
     $group->post('[/]', EncuestaController::class . ':addOne');

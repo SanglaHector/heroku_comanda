@@ -8,6 +8,7 @@ use Controllers\UsuarioController;
 use Components\Token;
 use Components\Retorno;
 use Enums\EtipoUsuario;
+use Exception;
 
 class MDWVerificarRol // verifico el rol: empleado(mozo, bartender, etc), socio o cliente
 {
